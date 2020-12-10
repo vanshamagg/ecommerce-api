@@ -1,0 +1,32 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "a simple backend for an ecommerce website",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon ./src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/exponentsoftware/-MS_E-commerce_Lupus_Tep_Online_Full-time_2020_2.git"
+  },
+  "keywords": [
+    "backend",
+    "express",
+    "ecommerce"
+  ],
+  "author": "Vansham Aggarwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/exponentsoftware/-MS_E-commerce_Lupus_Tep_Online_Full-time_2020_2/issues"
+  },
+  "homepage": "https://github.com/exponentsoftware/-MS_E-commerce_Lupus_Tep_Online_Full-time_2020_2#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.6",
+    "multer": "^1.4.2"
+  }
+}
