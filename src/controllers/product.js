@@ -3,27 +3,18 @@ const images = require("../models/images");
 const path = require("path");
 const fs = require("fs");
 
-// product add form
-function addProductForm(req, res) {
-    let dirpath = path.dirname(__filename).split(path.sep);
-    dirpath.pop();
-    dirpath = dirpath.join(path.sep);
 
-    res.sendFile(path.join(dirpath, "views", "add-product.html"));
-}
 
 // adding the product info to the db (CREATE)
 async function addProductToDatabase(req, res) {
-    const { productTitle, category, mrp, price, description, bullets } = req.body;
-    const { attr, val } = req.body;
-    const attributes = attr.map((value, index) => (value ? { key: value, value: val[index] } : {}));
-    const newImage = new images({
-        data: fs.readFileSync(req.file.destination + "/" + req.file.filename),
-        contentType: req.file.mimetype,
-    });
+    const { bullets, productTitle, category, mrp, price, description, productImage, attributes } = req.body;
+    // const newImage = new images({
+    //     data: fs.readFileSync(productImage),
+    //     contentType: "Something"
+    // });
     try {
-        const doc = await newImage.save();
-        console.log("Image ID", doc._id);
+        // const doc = await newImage.save();
+        // console.log("Image ID", doc._id);
         const newProduct = new product({
             productTitle,
             category,
@@ -32,18 +23,18 @@ async function addProductToDatabase(req, res) {
             attributes,
             description,
             bullets,
-            productImage: doc._id,
+            // productImage: doc._id,
         });
-        newProduct
-            .save()
-            .then((doc) => res.send("Uploaded Successfully"))
-            .catch((err) => console.log(err.message.bold.red));
+
+        const doc = await newProduct.save();
+        res.send({ message: "New Product Created Successfully", newProduct });
+        console.log("New Product Created Successfully".white.bold);
     } catch (err) {
         console.log(err.message.bold.red);
         res.send({ message: err.message });
     } finally {
         // remove the image file from the local server
-        fs.rmSync(req.file.destination + "/" + req.file.filename);
+        // fs.rmSync(req.file.destination + "/" + req.file.filename);
     }
 }
 
@@ -63,8 +54,8 @@ async function getProductbyID(req, res) {
 async function updateProductDetails(req, res) {
     try {
         const _id = req.params.id;
-        const { bullets, productTitle, category, mrp, price, attr, val, description, productImage } = req.body;
-        const attributes = attr.map((value, index) => (value ? { key: value, value: val[index] } : {}));
+        const { bullets, productTitle, category, mrp, price, attributes, description, productImage } = req.body;
+        // const attributes = attr.map((value, index) => (value ? { key: value, value: val[index] } : {}));
         const doc = await product.findOneAndUpdate(
             { _id },
             {
@@ -78,36 +69,30 @@ async function updateProductDetails(req, res) {
             },
             { new: true, runValidators: true, useFindAndModify: true }
         );
-        res.send({ message: "Updated Successfully", doc: doc });
-        console.log("product updated".bold.green);
+        res.send({ message: "Updated Successfully", doc });
+        console.log("product updated".bold.white);
     } catch (err) {
         res.send({ message: err.message });
         console.log(err.message.bold.red);
     }
 }
-function updateProductForm(req, res) {
-    let dirpath = path.dirname(__filename).split(path.sep);
-    dirpath.pop();
-    dirpath = dirpath.join(path.sep);
 
-    res.sendFile(path.join(dirpath, "views", "update-product.html"));
-}
 
 // DELETE- product
 async function deleteProduct(req, res) {
     try {
         const _id = req.params.id;
-        const data = await product.findOneAndDelete({ _id });
+        const data = await product.findOneAndDelete({ _id }, { useFindAndModify: true });
         console.log("Product Deleted from Database".bold.white);
-        res.send({message: "Product Deleted from Database"});
+        res.send({ message: "Product Deleted from Database" });
     } catch (err) {
         console.log(err.message.bold.red);
         res.send({ message: err.message });
     }
 }
 module.exports.addProductToDatabase = addProductToDatabase;
-module.exports.addProductForm = addProductForm;
+
 module.exports.getProductbyID = getProductbyID;
 module.exports.updateProductDetails = updateProductDetails;
-module.exports.updateProductForm = updateProductForm;
+
 module.exports.deleteProduct = deleteProduct;
