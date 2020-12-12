@@ -3,11 +3,9 @@ const images = require("../models/images");
 const path = require("path");
 const fs = require("fs");
 
-
-
 // adding the product info to the db (CREATE)
 async function addProductToDatabase(req, res) {
-    const { bullets, productTitle, category, mrp, price, description, productImage, attributes } = req.body;
+    const { bullets, productTitle, category, mrp, price, description, productImage, attributes, variations } = req.body;
     // const newImage = new images({
     //     data: fs.readFileSync(productImage),
     //     contentType: "Something"
@@ -23,6 +21,7 @@ async function addProductToDatabase(req, res) {
             attributes,
             description,
             bullets,
+            variations,
             // productImage: doc._id,
         });
 
@@ -54,7 +53,7 @@ async function getProductbyID(req, res) {
 async function updateProductDetails(req, res) {
     try {
         const _id = req.params.id;
-        const { bullets, productTitle, category, mrp, price, attributes, description, productImage } = req.body;
+        const { bullets, productTitle, category, mrp, price, attributes, description, productImage, variations } = req.body;
         // const attributes = attr.map((value, index) => (value ? { key: value, value: val[index] } : {}));
         const doc = await product.findOneAndUpdate(
             { _id },
@@ -66,6 +65,7 @@ async function updateProductDetails(req, res) {
                 price,
                 attributes,
                 description,
+                variations,
             },
             { new: true, runValidators: true, useFindAndModify: true }
         );
@@ -76,7 +76,6 @@ async function updateProductDetails(req, res) {
         console.log(err.message.bold.red);
     }
 }
-
 
 // DELETE- product
 async function deleteProduct(req, res) {
@@ -90,9 +89,8 @@ async function deleteProduct(req, res) {
         res.send({ message: err.message });
     }
 }
-module.exports.addProductToDatabase = addProductToDatabase;
 
+module.exports.addProductToDatabase = addProductToDatabase;
 module.exports.getProductbyID = getProductbyID;
 module.exports.updateProductDetails = updateProductDetails;
-
 module.exports.deleteProduct = deleteProduct;

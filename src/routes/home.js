@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-const { checkCookies, showSignUpPage, showDashBoard } = require("../services/cookies");
+const { showSignUpPage, showDashBoard } = require("../services/cookies");
 const homeRouter = express.Router();
 
 homeRouter.use(cookieParser());
@@ -35,7 +35,7 @@ homeRouter.use('/user/dashboard', showDashBoard,(req, res)=> {
 })
 
 homeRouter.use('/user/logout', (req, res)=> {
-    res.clearCookie('_id');
+    res.clearCookie('token');
     res.send("You have successfully logged out");
 })
 

@@ -22,6 +22,7 @@ const productRouter = express.Router();
 productRouter.use(express.json());
 productRouter.use(cookieParser());
 productRouter.use(checkCookies);
+
 // CREATE - Add a product
 productRouter.post("/", addProductToDatabase);
 //  READ - get all products

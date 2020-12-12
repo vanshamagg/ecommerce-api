@@ -1,7 +1,7 @@
 const express = require("express");
 const { logger } = require("./controllers/primary");
 const db = require("./models/database");
-const homeRouter = require("./routes/home")
+const homeRouter = require("./routes/home");
 const productRouter = require("./routes/product");
 const userRouter = require("./routes/user");
 const path = require("path");

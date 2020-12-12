@@ -1,10 +1,11 @@
 const express = require("express");
 const userRouter = express.Router();
-const { addUser, getUsers, getUserById, updateUserbyId, deleteUserById, authenticateUser } = require("../controllers/user");
-const user = require("../models/user");
+const { addUser, getUsers, getUserById, updateUserbyId, deleteUserById, authenticateUser, getCartById, modifyCart } = require("../controllers/user");
+
 const { checkAdminAccess } = require("../services/cookies");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
+const user = require("../models/user");
 
 // middlewares
 const upload = multer();
@@ -31,5 +32,10 @@ userRouter.patch("/:id", updateUserbyId);
 // DELETE - a user by ID
 userRouter.delete("/:id", deleteUserById);
 
+// READ - get cart details of the user
+userRouter.get('/cart/:id', getCartById);
+
+// PATCH - update cart of the user 
+userRouter.patch('/cart/:id', modifyCart);
 
 module.exports = userRouter;
