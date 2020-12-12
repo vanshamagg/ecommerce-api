@@ -2,6 +2,9 @@ const express = require("express");
 const product = require("../models/product");
 const { addProductToDatabase, getProductbyID, updateProductDetails, deleteProduct } = require("../controllers/product");
 const multer = require("multer");
+const { checkCookies } = require("../services/cookies");
+const cookieParser = require('cookie-parser');
+
 const productRouter = express.Router();
 // multer options
 // var storage = multer.diskStorage({
@@ -15,8 +18,10 @@ const productRouter = express.Router();
 // // multer middleware
 // var upload = multer({ storage: storage });
 
+// middlewares
 productRouter.use(express.json());
-
+productRouter.use(cookieParser());
+productRouter.use(checkCookies);
 // CREATE - Add a product
 productRouter.post("/", addProductToDatabase);
 //  READ - get all products

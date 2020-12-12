@@ -67,8 +67,27 @@ async function updateUserbyId(req, res) {
         console.log(err.message.bold.red);
     }
 }
+async function authenticateUser(req, res) {
+    try {
+        let doc = await user.find({ email: req.body.email });
+        doc = doc[0]
+        if (!doc) throw new Error("User Not Found");
+        if(doc.password === req.body.password) {
+            res.cookie('_id', doc._id.toString());
+            res.cookie('role', doc.role.toString());
+            res.redirect('/user/dashboard')
+        }
+        else {
+            throw new Error("Wrong Password");
+        }
+    } catch (err) {
+        console.log(err.message.red.bold);
+        res.status(400).send({ message: err.message });
+    }
+}
 module.exports.addUser = addUser;
 module.exports.getUsers = getUsers;
 module.exports.getUserById = getUserById;
 module.exports.updateUserbyId = updateUserbyId;
 module.exports.deleteUserById = deleteUserById;
+module.exports.authenticateUser = authenticateUser;
