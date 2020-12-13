@@ -20,23 +20,18 @@ homeRouter.use("/product/update", (req, res) => {
     res.sendFile(path.join(dirpath, "views", "update-product.html"));
 });
 
-homeRouter.use("/user/signin",  showSignUpPage , (req, res) => {
+homeRouter.use("/user/signin", showSignUpPage, (req, res) => {
     let dirpath = path.dirname(__filename).split(path.sep);
     dirpath.pop();
     dirpath = dirpath.join(path.sep);
     res.sendFile(path.join(dirpath, "views", "signin.html"));
 });
 
-homeRouter.use('/user/dashboard', showDashBoard,(req, res)=> {
+homeRouter.use("/user/dashboard", showDashBoard, (req, res) => {
     let dirpath = path.dirname(__filename).split(path.sep);
     dirpath.pop();
     dirpath = dirpath.join(path.sep);
     res.sendFile(path.join(dirpath, "views", "dashboard.html"));
-})
-
-homeRouter.use('/user/logout', (req, res)=> {
-    res.clearCookie('token');
-    res.send("You have successfully logged out");
-})
+});
 
 module.exports = homeRouter;

@@ -1,4 +1,3 @@
-const { get } = require("mongoose");
 const user = require("../models/user");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
@@ -69,33 +68,12 @@ async function updateUserbyId(req, res) {
         console.log(err.message.bold.red);
     }
 }
-async function authenticateUser(req, res) {
-    try {
-        let doc = await user.find({ email: req.body.email });
-        doc = doc[0];
-        if (!doc) throw new Error("User Not Found");
-        if (doc.password === req.body.password) {
-            const creds = {
-                _id: doc._id.toString(),
-                role: doc.role.toString(),
-                time: Date.now(),
-            };
-            const encoded = jwt.sign(creds, process.env.JWB_SECRET_KEY);
-            console.log(encoded);
-            res.cookie("token", encoded, { httpOnly: true, expires: 0 });
-            res.redirect("/user/dashboard");
-        } else {
-            throw new Error("Wrong Password");
-        }
-    } catch (err) {
-        console.log(err.message.red.bold);
-        res.status(400).send({ message: err.message });
-    }
-}
+
 
 async function getCartById(req, res) {
     try {
-        const _id = req.params.id;
+        const  obj = jwt.verify(req.cookies.token, process.env.JWB_SECRET_KEY); 
+        const _id = obj._id;
         const doc = await user.find({ _id });
         const cart = doc[0].cart;
         res.send(cart);
@@ -107,7 +85,8 @@ async function getCartById(req, res) {
 
 async function modifyCart(req, res) {
     try {
-        const _id = req.params.id;
+        const  obj = jwt.verify(req.cookies.token, process.env.JWB_SECRET_KEY); 
+        const _id = obj._id;
         const cart = req.body;
         const doc = await user.findOneAndUpdate({ _id }, { cart }, { new: true, runValidators: true, useFindAndModify: false });
         res.send({ message: "Cart Updated Successfully", cart: doc.cart });
@@ -122,6 +101,5 @@ module.exports.getUsers = getUsers;
 module.exports.getUserById = getUserById;
 module.exports.updateUserbyId = updateUserbyId;
 module.exports.deleteUserById = deleteUserById;
-module.exports.authenticateUser = authenticateUser;
 module.exports.getCartById = getCartById;
 module.exports.modifyCart = modifyCart;
