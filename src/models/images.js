@@ -1,3 +1,7 @@
+/**
+ * @author Vansham Aggarwal <vanshamagg@gmail.com>
+ * IMAGE SCHEMA
+ */
 const mongoose = require('mongoose');
 
 const imageSchema = new mongoose.Schema({

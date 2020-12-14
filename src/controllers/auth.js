@@ -1,8 +1,13 @@
+/**
+ * CONTROLLERS FOR THE /auth ROUTES
+ */
 const user = require("../models/user");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
 
-
+/**
+ * Local Authentication
+ */
 async function authenticateUser(req, res) {
     try {
         let doc = await user.find({ email: req.body.email });
@@ -27,6 +32,9 @@ async function authenticateUser(req, res) {
     }
 }
 
+/**
+ * Authentication Using Google
+ */
 function authenticateGoogle(req, res) {
     // res.send("Authenticating using google..")
     const creds = {

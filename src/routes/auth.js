@@ -1,3 +1,7 @@
+/**
+ * ROUTER for /auth
+ */
+
 const express = require("express");
 const multer = require("multer");
 const cookieParser = require("cookie-parser");
@@ -23,13 +27,17 @@ authRouter.get("/logout", (req, res) => {
     console.log("User has logged out".white.bold);
 });
 
-// Login using google
+/**
+ * Auth using Google
+ */
 authRouter.get(
     "/google",
     passport.authenticate("google", {
         scope: ["profile", "email"],
     })
 );
-
+/**
+ * Google Redirect/Callback URL
+ */
 authRouter.get("/google/redirect/", passport.authenticate("google"), authenticateGoogle);
 module.exports = authRouter;

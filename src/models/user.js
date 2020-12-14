@@ -1,6 +1,9 @@
+/**
+ * USER SCHEMA
+ */
 const mongoose = require("mongoose");
 
-//  default roles - 'buyer' or 'seller'
+//  default roles - 'buyer', 'seller', 'admin'
 
 const userSchema = new mongoose.Schema( {
     firstname: {type: String, required: true},

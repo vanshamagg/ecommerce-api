@@ -1,9 +1,14 @@
+/**
+ * CONTROLLERS FOR THE /api/product ROUTE
+ */
 const product = require("../models/product");
 const images = require("../models/images");
 const path = require("path");
 const fs = require("fs");
 
-// adding the product info to the db (CREATE)
+/**
+ * CREATE a product an adding to the database
+ */
 async function addProductToDatabase(req, res) {
     const { bullets, productTitle, category, mrp, price, description, productImage, attributes, variations } = req.body;
     // const newImage = new images({
@@ -37,7 +42,9 @@ async function addProductToDatabase(req, res) {
     }
 }
 
-// READ -  get product details by ID
+/**
+ * Gets the product detail using it's product ID
+ */
 async function getProductbyID(req, res) {
     try {
         const _id = req.params.id;
@@ -49,7 +56,9 @@ async function getProductbyID(req, res) {
     }
 }
 
-// UPDATE - update product details
+/**
+ *  Updates the product details using the product ID
+ */
 async function updateProductDetails(req, res) {
     try {
         const _id = req.params.id;
@@ -77,7 +86,9 @@ async function updateProductDetails(req, res) {
     }
 }
 
-// DELETE- product
+/**
+ * deletes a product using it's product ID
+ */
 async function deleteProduct(req, res) {
     try {
         const _id = req.params.id;

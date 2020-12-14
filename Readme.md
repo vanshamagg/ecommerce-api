@@ -1,30 +1,47 @@
-# Milestone-8: E-commerce
+# Ecommerce API
+ 
+ This is a simple API for an Ecommerce Web Application, purely implemented in ExpressJS. It provies various routes for CRUD of products and users. We have implemeneted MongoDB Atlas as the Db provider. 
 
-## Learning Competencies
+ ## Paths/EndPoints
 
-At the end of this milestone you will learn
+ ### / (HOME)
 
-### Backend
-
-- How to retain the session information as HTTP is stateless
-- How to authorize third party applications like Google, facebook, github etc.
-- Understanding the usage and functions of Cache memory
-- How do you run a script in background in the browser using Service workers
-
-### Frontend
-
-- Creating Single page applications using React
-- Handling DOM using React
-- Handling Events in React
-- Understanding the data flow in ReactJS
+* `GET /product/add` - Form to add a product
+* `GET /product/update` -  Form to update a product (may not work properly)
+* `GET /user/signin` -  Form to signin 
+* `GET /user/dashboard` - redirection to the dashboard after signin
 
 
-## Problem Statement
+### /auth
 
-Let's build a fully functional e-commerce site on MERN stack!! You will be building a replica of one of your favourite e-commerce website.
+* `POST /` - Local Authentication.
+* `GET /logout` -  Logout.
+* `GET /google`-  Authentication using Google. 
+* `GET /google/redirect`- Google Redirection/Callback URL.
 
-### What's an e-commerce website?
+### /api/user
 
-[Wiki](https://en.wikipedia.org/wiki/E-commerce) says
+Sign-in is required to access this route.
 
-> E-commerce is the activity of buying or selling online. Electronic commerce draws on technologies such as mobile commerce, electronic funds transfer, supply chain management, Internet marketing, online transaction processing, electronic data interchange (EDI), inventory management systems, and automated data collection systems.
+* `GET /cart` -  Retrive Cart items.
+* `PATCH /cart` -  Edit Cart Items.
+
+Administrator priveleges are needed to access this route.
+
+* `POST /` - Create a New User.
+* `GET /` - Get details of a existing user.
+* `PATCH /:id` -  Edit a user using his MongoDB ID.
+* `DELETE /:id` - Delete a User using his MongoDb ID.
+
+### /api/product
+
+Sign-in is required to access this route.
+
+* `POST /` - Create a new product.
+* `GET /` -  Retrieve all products.
+* `GET /:id` -  Get a specific product using its MongoDB _id.
+* `PATCH /:id` - Edit a specific product using its MongoDB _id.
+* `DELETE /:id` -  Delete a specific product using its MongoDB _id.
+
+For Keys and other crdentials, feel free to contact me at 
+_*vanshamagg@gmail.com*_

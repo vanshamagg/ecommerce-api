@@ -1,3 +1,7 @@
+/**
+ * ROUTER FOR /api/product
+ */
+
 const express = require("express");
 const product = require("../models/product");
 const { addProductToDatabase, getProductbyID, updateProductDetails, deleteProduct } = require("../controllers/product");
@@ -23,18 +27,32 @@ productRouter.use(express.json());
 productRouter.use(cookieParser());
 productRouter.use(checkCookies);
 
-// CREATE - Add a product
+/**
+ * Create a product
+ */
 productRouter.post("/", addProductToDatabase);
-//  READ - get all products
+
+/**
+ * Get all the products
+ */
 productRouter.get("/", async (req, res) => {
     const collection = await product.find();
     res.send(collection);
 });
-// READ - get product by ID
+
+/**
+ * Get a product using ID
+ */
 productRouter.get("/:id", getProductbyID);
-// UPDATE - Update product by ID
+
+/**
+ * Update product using ID
+ */
 productRouter.patch("/:id", updateProductDetails);
-// DELETE - Delete a product using ID
+
+/**
+ * Delete a product using ID
+ */
 productRouter.delete("/:id", deleteProduct);
 
 module.exports = productRouter;

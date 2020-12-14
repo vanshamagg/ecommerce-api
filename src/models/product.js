@@ -1,5 +1,12 @@
+/**
+ * PRODUCT SCHEMA
+ */
+
 const mongoose = require("mongoose");
 
+/**
+ * Schema for adding variations of the product within the product schema
+ */
 const variationSchema = new mongoose.Schema({
     mode: { type: String, required: true, default: "color" },
     image: { type: mongoose.Schema.Types.ObjectId, required: true, default: "5fd256e77ce85916e9d69188" },

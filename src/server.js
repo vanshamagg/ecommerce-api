@@ -1,3 +1,7 @@
+/**
+ * THE ENTRY POINT
+ */
+
 const express = require("express");
 const { logger } = require("./controllers/primary");
 const db = require("./models/database");
@@ -12,9 +16,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(logger);
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "views", "products.html"));
-});
+
 // Mounted Routes
 app.use("/auth", authRouter);
 app.use("/api/product", productRouter);

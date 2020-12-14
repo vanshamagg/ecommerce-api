@@ -1,6 +1,15 @@
+/**
+ * CONTROLLERS FOR THE /api/user ROUTER
+ * ADMIN PROTECTED ROUTES
+ */
+
 const user = require("../models/user");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv").config();
+
+/**
+ * Creates a user and add it to the database
+ */
 async function addUser(req, res) {
     try {
         const { firstname, lastname, email, address, phone, role, password } = req.body;
@@ -22,7 +31,9 @@ async function addUser(req, res) {
         console.log(err.message.red.bold);
     }
 }
-
+/**
+ * Gets all the users in the database
+ */
 async function getUsers(req, res) {
     try {
         const collection = await user.find();
@@ -32,7 +43,9 @@ async function getUsers(req, res) {
         console.log(err.message.red.bold);
     }
 }
-
+/**
+ * Gets a single user using his _id
+ */
 async function getUserById(req, res) {
     try {
         const _id = req.params.id;
@@ -43,7 +56,9 @@ async function getUserById(req, res) {
         console.log(err.message.red.bold);
     }
 }
-
+/**
+ * Deletes a user using his _id
+ */
 async function deleteUserById(req, res) {
     try {
         const _id = req.params.id;
@@ -55,7 +70,9 @@ async function deleteUserById(req, res) {
         console.log(err.message.red.bold);
     }
 }
-
+/**
+ * Updates a user's details using his _id
+ */
 async function updateUserbyId(req, res) {
     try {
         const _id = req.params.id;
@@ -69,7 +86,9 @@ async function updateUserbyId(req, res) {
     }
 }
 
-
+/**
+ * Get's the cart items of a specific user
+ */
 async function getCartById(req, res) {
     try {
         const  obj = jwt.verify(req.cookies.token, process.env.JWB_SECRET_KEY); 
@@ -82,7 +101,9 @@ async function getCartById(req, res) {
         console.log(err.message.red.bold);
     }
 }
-
+/**
+ * Modifies the cart of the user 
+ */
 async function modifyCart(req, res) {
     try {
         const  obj = jwt.verify(req.cookies.token, process.env.JWB_SECRET_KEY); 

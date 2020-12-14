@@ -1,5 +1,6 @@
 const passport = require("passport");
 const User = require("../models/user");
+const dotenv = require('dotenv');
 
 const GoogleStrategy = require("passport-google-oauth20");
 
@@ -15,9 +16,9 @@ passport.deserializeUser((obj, done)=> {
 passport.use(
     new GoogleStrategy(
         {
-            callbackURL: "/auth/google/redirect",
-            clientID: "47138177234-kaeje8dehg6k5uuf2f46vdkf3bqcsu5q.apps.googleusercontent.com",
-            clientSecret: "vw6PF9Tx7KFtDXAxtRC-JDMn",
+            callbackURL: process.env.GOOGLE_CALLBACK_URL,
+            clientID: process.env.CLIENT_ID ,
+            clientSecret: process.env.CLIENT_SECRET,
         },
         cb
     )
@@ -30,7 +31,7 @@ function cb(accessToken, refreshToken, profile, done) {
             const doc = await User.findOne({ email: data.email });
             // if a user is found
             if (doc) {
-                console.log("USER FOUND");
+                console.log("USER FOUND".white.bold);
                 done(null, doc)
                 // if a user is not found, we create one
             } else {
